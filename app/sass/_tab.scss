@@ -1,0 +1,59 @@
+/************* Tabs ***************/
+
+.tab-wrapper {
+    margin: 80px auto 50px;
+    width: 100%;
+    .tab-menu {
+        margin: 0px 0 0 15px;
+        padding: 0px;
+        li {
+            position: relative;
+            background-color: #f7f7f7;
+            color: #131316;
+            font-size: 14px;
+            display: inline-block;
+            padding: 8px 30px;
+            cursor: pointer;
+            z-index: 0;
+            border: 1px solid #efefef;
+            border-bottom: 0px;
+            text-transform: uppercase;
+            font-family: "LatoBold";
+            &:hover {
+                color: #131316;
+            }
+            &.active {
+                color: #f7213c;
+                background-color: #fff;
+                &:hover {
+                    color: #464646;
+                }
+            }
+        }
+    }
+    
+    .tab-content{
+        border: 1px solid #efefef;
+        margin-top: -1px;
+        >div {
+            background-color: #fff;
+            box-sizing: border-box;
+            width: 100%;
+            padding: 50px 30px;
+            min-height: 160px;
+            font-size: 14px;
+            color: #131316;
+        }
+    }
+    .line {
+        position: absolute;
+        width: 0;
+        height: 4px;
+        background-color: #f7213c;
+        top: -5px;
+        left: 0;
+    }
+}
+
+
+

@@ -1,0 +1,81 @@
+/*VARS*/
+$rad: 10px;
+
+$bpad: 0.1rem;
+$padm: 0.5rem;
+$pad: 1rem;
+$pad2: 1.2rem;
+$pad3: 1.4rem;
+$pad4: 2rem;
+$bm: 3rem;
+
+$xxxl: 2.5rem; /*h1*/
+$xxl: 2rem; /*h2*/
+$xl: 1.5rem; /*h3*/
+$l: 1.2rem; /*h4*/
+$normal: 1rem; /*p*/
+$small: 0.8rem; /*small*/
+$tiny: 0.6rem; /*tiny*/
+
+@mixin xxxlarge(){font-size: $xxxl;}
+@mixin xxlarge(){font-size: $xxl;}
+@mixin xlarge(){font-size: $xl;}
+@mixin large(){font-size: $l;}
+@mixin normal(){font-size: $normal;}
+@mixin small(){font-size: $small;}
+@mixin tiny(){font-size: $tiny;}
+
+@mixin x{
+    margin: 0 auto;
+    text-align: center;
+}  /*выравнивание по центру*/
+
+@mixin bold{
+    font-weight: bold;
+}
+
+@mixin h1{
+	text-transform: uppercase;
+	color: $color-txt;
+	width: 100%;
+	text-align: left;
+	margin-top: $pad2;
+	margin-bottom: $pad3;
+	font-size: $xxxl;
+	@include bold;
+}
+@mixin h2(){
+	@include bold();
+    font-size: $xxl;
+}
+@mixin h3(){
+    font-size: $xxl;
+    font-weight: 400;
+}
+@mixin h4(){
+    font-size: $xl; 
+    color: $color-txt2; 
+    font-weight: 300;
+}
+
+$color-link: rgba(255,255,255,0.9);
+$color-btn: #4eb5bc;
+
+$color-accent: #ff1451;
+$color-accent2: #f4154e;
+
+$color-border: #dedede;
+
+$grey: #f5f5f5;
+
+$color-hidden: #eee;
+
+$color-txt: #000;
+$color-txt2: #747474;
+
+$color-back: #fff;
+$color-back2: #252525;
+$color-back3: #1c1c1c;
+$color-back4: #fff;
+
+$btn-color: #4eb5bc;	

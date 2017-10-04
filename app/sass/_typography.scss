@@ -1,0 +1,76 @@
+/*TYPOGRAPHY*/
+a {
+    @include transitions();
+    display: inline;
+    text-decoration: none;
+    color: $color-link;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+h1 a,
+h2 a,
+h3 a {
+    padding: 0;
+}
+
+h1 {
+    @include h1();
+}
+
+h2 {
+    @include h2();
+}
+
+h3 {
+    @include h3();
+}
+
+h4,
+h5,
+h6 {
+    @include h4();
+    margin: 0 !important;
+}
+
+p {
+    margin: 0;
+    margin-bottom: $pad2;
+    width: auto;
+    font-size: $normal;
+    height: auto;
+    letter-spacing: normal;
+    @include normal;
+    a {
+        padding: 0;
+        display: inline;
+    }
+}
+
+table,
+form,
+input,
+select,
+textarea,
+iframe,
+object {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+    font-size: $normal;
+}
+
+.light {
+    font-weight: normal;
+}
+.text-left{
+    text-align: left;
+}
