@@ -1,2 +1,2 @@
-# gulp_sass
+# Gulp_sass
 Building a gulp-based and sass development workflow
