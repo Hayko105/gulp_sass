@@ -2,7 +2,6 @@
 
 var gulp           = require("gulp"),
     autoprefixer   = require("gulp-autoprefixer"),
-    cssbeautify    = require("gulp-cssbeautify"),
     removeComments = require('gulp-strip-css-comments'),
     rename         = require("gulp-rename"),
     sass           = require("gulp-sass"),
@@ -14,9 +13,8 @@ var gulp           = require("gulp"),
     imagemin       = require("gulp-imagemin"),
     run            = require("run-sequence"),
     rimraf         = require("rimraf"),
-    webserver      = require("browser-sync"),
-    concat         = require('gulp-concat'),
-    include        = require("gulp-include");
+    jquery         = require('gulp-jquery'),
+    webserver      = require("browser-sync");
 
 
 // ///////////////////////////////////////////////////
@@ -67,6 +65,15 @@ gulp.task("webserver", function () {
 });
 
 
+gulp.task('jquery', function () {
+    return jquery.src({
+        release: 2, //jQuery 2 
+    })
+    .pipe(gulp.dest('app/js/includes'));
+    // creates app/js/includes/jquery.custom.js 
+});
+
+
 gulp.task("html:build", function () {
     return gulp.src(path.src.html)
         .pipe(plumber())
@@ -85,7 +92,6 @@ gulp.task("css:build", function () {
             cascade: true
         }))
         .pipe(removeComments())
-        .pipe(cssbeautify())
         .pipe(cssnano({
             zindex: false,
             discardComments: {
@@ -168,6 +174,7 @@ gulp.task("watch", function() {
 gulp.task("default", function (cb) {
    run(
        "clean",
+       "jquery",
        "build",
        "webserver",
        "watch"
