@@ -12,3 +12,8 @@ After cloning the project to your computer run the following command in your ter
 # Start
 
     gulp
+    		
+
+# Building
+
+    gulp build
