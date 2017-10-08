@@ -21,10 +21,14 @@ var gulp           = require("gulp"),
 // Paths to app/dist/watch files
 // ///////////////////////////////////////////////////
 var path = {
+    dev: {
+        js: "app/src/js/",
+        css: "app/src/css/",
+    },
     build: {
         html: "dist/",
-        js: "dist/js/",
-        css: "dist/css/",
+        js: "dist/src/js/",
+        css: "dist/src/css/",
         img: "dist/images/",
         fonts: "dist/fonts/"
     },
@@ -42,7 +46,10 @@ var path = {
         img: "app/images/**/*.*",
         fonts: "app/fonts/**/*.*"
     },
-    clean: "./dist"
+    clean: {
+        dist: "dist",
+        dev: "app/src"
+    }
 };
 
 
@@ -50,7 +57,7 @@ var path = {
 // Webserver config
 // ///////////////////////////////////////////////////
 var config = {
-    server: "dist/",
+    server: "app/",
     notify: false,
     open: true,
     ui: false
@@ -74,16 +81,22 @@ gulp.task('jquery', function () {
 });
 
 
+// Html task
+gulp.task("html:dev", function () {
+    return gulp.src(path.src.html)
+        .pipe(plumber())
+        .pipe(webserver.reload({stream: true}));
+});
 gulp.task("html:build", function () {
     return gulp.src(path.src.html)
         .pipe(plumber())
         .pipe(rigger())
-        .pipe(gulp.dest(path.build.html))
-        .pipe(webserver.reload({stream: true}));
+        .pipe(gulp.dest(path.build.html));
 });
 
 
-gulp.task("css:build", function () {
+// Sass task
+gulp.task("css:dev", function () {
     gulp.src(path.src.css)
         .pipe(plumber())
         .pipe(sass().on('error', sass.logError ))
@@ -99,12 +112,18 @@ gulp.task("css:build", function () {
             }
         }))
         .pipe(rename("style.min.css"))
-        .pipe(gulp.dest(path.build.css))
+        .pipe(gulp.dest(path.dev.css))
         .pipe(webserver.reload({stream: true}));
 });
 
+gulp.task("css:build", function () {
+    gulp.src(path.dev.css+'style.min.css')
+        .pipe(gulp.dest(path.build.css));
+});
 
-gulp.task("js:build", function () {
+
+// Js task
+gulp.task("js:dev", function () {
     gulp.src(path.src.js)
         .pipe(plumber())
         .pipe(rigger())
@@ -112,17 +131,24 @@ gulp.task("js:build", function () {
         .pipe(removeComments())
         .pipe(rename("all.min.js"))
         .pipe(uglify())
-        .pipe(gulp.dest(path.build.js))
+        .pipe(gulp.dest(path.dev.js))
         .pipe(webserver.reload({stream: true}));
 });
 
+gulp.task("js:build", function () {
+    gulp.src(path.dev.js+'all.min.js')
+        .pipe(gulp.dest(path.build.js));
+});
 
+
+// Fonts task
 gulp.task("fonts:build", function() {
     gulp.src(path.src.fonts)
         .pipe(gulp.dest(path.build.fonts));
 });
 
 
+// Images task
 gulp.task("image:build", function () {
     gulp.src(path.src.img)
         .pipe(imagemin({
@@ -135,14 +161,19 @@ gulp.task("image:build", function () {
 });
 
 
-gulp.task("clean", function (cb) {
-    rimraf(path.clean, cb);
+// Clean tasks
+gulp.task("clean_dist", function (cb) {
+    rimraf(path.clean.dist, cb);
+});
+gulp.task("clean_dev", function (cb) {
+    rimraf(path.clean.dev, cb);
 });
 
 
+// Build task
 gulp.task('build', function (cb) {
     run(
-        "clean",
+        "clean_dist",
         "html:build",
         "css:build",
         "js:build",
@@ -154,28 +185,24 @@ gulp.task('build', function (cb) {
 
 gulp.task("watch", function() {
     watch([path.watch.html], function(event, cb) {
-        gulp.start("html:build");
+        gulp.start("html:dev");
     });
     watch([path.watch.css], function(event, cb) {
-        gulp.start("css:build");
+        gulp.start("css:dev");
     });
     watch([path.watch.js], function(event, cb) {
-        gulp.start("js:build");
-    });
-    watch([path.watch.img], function(event, cb) {
-        gulp.start("image:build");
-    });
-    watch([path.watch.fonts], function(event, cb) {
-        gulp.start("fonts:build");
+        gulp.start("js:dev");
     });
 });
 
 
 gulp.task("default", function (cb) {
    run(
-       "clean",
        "jquery",
-       "build",
+       "clean_dev",
+       "html:dev",
+       "css:dev",
+       "js:dev",       
        "webserver",
        "watch"
    , cb);
